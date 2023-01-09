@@ -1,0 +1,35 @@
+# For documentation on this file, see:
+# https://github.com/riggraz/no-style-please#customize-the-menu
+
+entries:
+  - title: info
+    entries:
+      - title: welcome my blog 👋 
+      - title: github
+        url: https://github.com/codnstj
+      - title: instagram
+        url: https://instagram.com/co_dns__
+      - title: email
+        url: mailto:chaewoon.me@gmail.com
+
+  - title: all posts
+    post_list:
+      limit: 5
+      show_more: true
+      show_more_text: See archive...
+      show_more_url: archive.html
+
+  - title: Category
+    entries:
+      - title: AWS
+        url: aws-archive.html
+      - title: CS
+        url: cs-archive.html         
+      - title: Python
+        url: python-archive.html            
+      - title: life
+        url: life-archive.html        
+    
+
+  - title: rss
+    url: feed.xml
