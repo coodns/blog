@@ -25,3 +25,5 @@ sass:
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
+
+google_analytics: 'G-P7Q51QWC0C'
