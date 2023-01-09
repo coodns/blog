@@ -4,7 +4,7 @@ email: chaewoon.me@gmail.com # email of site's author
 url: https://blog.chaewoon.me # root address of the site
 baseurl: "/" # subpath of the site, e.g. "/blog" (leave it blank "" if you're site shouldn't use a subpath)
 description: > # description of the site (multiple lines allowed)
-  Welcome my blog
+  인생은 뚱이처럼 
 
 permalink: /:slug.html
 
