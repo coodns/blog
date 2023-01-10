@@ -2,7 +2,6 @@
 layout: post
 category: Python
 ---
-# unpacking 을 통한 대입    
 파이썬에는 불변의 값으로 순서쌍을 만들어낼수 있는 `tuple` 내장 타입이 있다.
 ```python
 snack_caloriees = {

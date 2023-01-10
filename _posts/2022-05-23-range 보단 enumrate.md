@@ -2,7 +2,6 @@
 layout: post
 category: Python
 ---
-# range 보다는 enumrate 를 사용하라
 
 ## range 
 range 내장함수는 어떤 정수 집합을 이터레이션하는 루프가 필요할떄 유용하다.
