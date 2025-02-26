@@ -28,7 +28,7 @@ entries:
       - title: life
         url: life-archive.html        
       - title: k8s
-        url: k8-archive.html
+        url: k8s-archive.html
 
 
   - title: rss
