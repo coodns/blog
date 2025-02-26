@@ -27,7 +27,9 @@ entries:
         url: python-archive.html            
       - title: life
         url: life-archive.html        
-    
+      - title: k8s
+        url: k8-archive.html
+
 
   - title: rss
     url: feed.xml
