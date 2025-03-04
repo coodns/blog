@@ -10,16 +10,21 @@ category: k8s
 ### 2. kubernetes는 무엇으로 이루어져 있나요?
 쿠버네티스를 배포하게 되면, **쿠버네티스 클러스터 형태**로 배포가 됩니다.  
 클러스터 노드라고 하는 **워커 머신들의 집합**을 의미하며 모든 클러스터는 **최소 하나의 워커 노드**를 가지게 됩니다.  
-</br>
+
+
 **워커 노드는 Pod를 호스팅하는 목적**을 두고 있으며, **Control Plane은 Worker Node와 클러스터 내 Pod들을 관리**합니다.
 
 ### 3. Control Plane (Master Node) Components  
 Control Plane (Master Node) 구성 요소는 **클러스터에 관한 전반적인 결정들을 수행하며 이벤트를 감지하고 반응**하도록 하는 요소들입니다.  
 예를 들어 **Pod 스케줄링을 수행하여 파드들이 생성되는 것을 일정화**할 수 있으며, **Deployment의 Replicas 필드에 대한 요구 조건이 충족되지 않을 경우 새로운 파드를 구동**시키는 역할을 합니다.  
-</br></br>
+
+
+
 위와 같이, Control Plane (Master Node) 구성 요소들은 **클러스터 내 어떠한 머신에서든지 동작 가능**하며, 대부분 Control Plane (Master Node)을 **동일한 컴퓨팅 머신상에 구성**하고, 사용자 컨테이너는 해당 컴퓨팅 머신에서 동작시키지 않습니다.  
 아래 Control Plane (Master Node)의 **구성 요소들**에 대해 살펴보겠습니다.  
-</br></br>
+
+
+
 ![Image](https://github.com/user-attachments/assets/bb9d1dd2-c72f-4719-8df1-9bf214486441)
 
 #### 3.1 Kube-apiserver  
@@ -61,7 +66,9 @@ kube-apiserver는 **파드, 서비스, 컨트롤러 등을 검증하고 구성�
 - **Route Controller**: 기본 클라우드 인프라에 경로 구성
 - **Service Controller**: 클라우드 인프라에서 로드밸런서 생성 및 관리
 
-</br></br>
+
+
+
 
 > **쿠버네티스를 클라우드에 배포하는 것과 온프레미스에 배포하는 것의 차이점은?**  
 
