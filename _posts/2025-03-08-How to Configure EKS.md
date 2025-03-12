@@ -108,6 +108,9 @@ eksctl create iamidentitymapping --cluster my-cluster --region=region-code \
     --no-duplicate-arns
 ```
 
+https://docs.aws.amazon.com/ko_kr/eks/latest/userguide/auth-configmap.html
+
+
 ## 3. Pod는 배포 시 어디로 가나요?
 Pod가 배포될 때, Kubernetes의 스케줄러가 해당 Pod를 어느 노드(Node)에 배치할지를 결정합니다. 기본적으로 Kubernetes는 여러 요소를 고려하여 최적의 노드를 선택합니다.
 
