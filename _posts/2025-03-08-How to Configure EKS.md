@@ -82,12 +82,12 @@ metadata:
   namespace: kube-system
 data:
   mapRoles: |
-    - rolearn: arn:aws:iam::123456789012:role/EKSAdminRole
+    - rolearn: arn:aws:iam::111122223333:role/my-role
       username: admin
       groups:
         - system:masters
   mapUsers: |
-    - userarn: arn:aws:iam::123456789012:user/developer
+    - userarn: arn:aws:iam::111122223333:user/my-user
       username: developer
       groups:
         - system:basic-user
@@ -114,19 +114,82 @@ https://docs.aws.amazon.com/ko_kr/eks/latest/userguide/auth-configmap.html
 ## 3. Pod는 배포 시 어디로 가나요?
 Pod가 배포될 때, Kubernetes의 스케줄러가 해당 Pod를 어느 노드(Node)에 배치할지를 결정합니다. 기본적으로 Kubernetes는 여러 요소를 고려하여 최적의 노드를 선택합니다.
 
-### 3.1 배포 방법 종류
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    ports:
+    - containerPort: 80
+```
 
-#### Pod
-#### Deployment
-#### DaemonSet
-#### Stateful
-#### Job
-#### Cronjob
+다음과 같이 Nginx Pod 를 생성 할 경우, Kubernetes 스케줄러가 적절한 노드를 찾아서 배치합니다. 기본적으로 CPU 및 메모리 사용량을 고려하여 여유 있는 노드에 배치되며,
+만약 특정 노드에 파드들을 배치하기 위해선 아래의 방법들이 있습니다.
 
-
-### 3.2 내가 원하는 노드에 Pod를 띄우는 방법
 
 1. nodeSelector
+
+nodeSelector 의 경우 특정 레이블을 가진 노드에만 Pod를 배치하도록 합니다. 파드 스펙에 nodeSelector 필드를 추가하고 타겟으로 삼고싶은 노드가 갖고 있는 노드 레이블을 명시 해주면, 해당 레이블을 갖고 있는 노드에만 파드를 스케줄링합니다.
+만약 명시된 레이블을 가지고 있는 노드가 존재하지 않을 경우, 배포할 노드가 존재하지 않기에 pending 상태가 됩니다.
+
+📌 example
+```yaml
+spec:
+  nodeSelector:
+    label-key: value
+ ```
 2. nodeAffinity
 
-이외에도 Taints & Tolerations, PodTopologySpreadConstraints 가 있습니다.
+nodeAffinity는 nodeSelector보다 더 유연한 방식으로, 여러 조건을 조합하여 원하는 노드에 Pod를 배포할 수 있도록 합니다.
+nodeAffinity에는 다음 두 종류가 있습니다.
+
+- requiredDuringSchedulingIgnoredDuringExecution: 규칙이 만족되지 않으면 스케줄러가 파드를 스케줄링할 수 없습니다. 이 기능은 nodeSelector와 유사하지만, 좀 더 표현적인 문법을 제공 합니다.
+- preferredDuringSchedulingIgnoredDuringExecution: 스케줄러는 조건을 만족하는 노드를 찾으려고 노력합니다. 해당되는 노드가 없더라도, 스케줄러는 여전히 파드를 스케줄링한다.
+
+아래 예시에서는 requiredDuringSchedulingIgnoredDuringExecution을 사용하여 **파드가 반드시 특정 조건을 만족하는 노드에서만 실행되도록 강제 합니다.**
+
+📌 example
+```yaml
+
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: label-key
+            operator: In
+            values:
+            - value
+
+```
+
+이외에도 NodeAffinty 의 반대로 노드가 파드 및 파드그룹을 제외시키는  **Taints & Tolerations**, 지역(region), 존(zone), 노드 및 기타 사용자 정의 토폴로지 도메인과 같이 장애 도메인으로 설정된 클러스터에 걸쳐 파드가 분배되는 방식을 제어할 수 있는 **PodTopologySpreadConstraints** 가 있습니다.
+
+### 3.1 배포 방법 종류
+
+Kubernetes에는 다양한 배포 방식이 있습니다.
+
+-	**Pod (단일 배포)**: 가장 기본적인 형태의 배포방식으로, 특정한 하나의 파드를 배포할때 사용하며, 테스트용으로 단일 컨테이너 배포시에 사용됩니다
+
+-	**Deployment**: 여러 개의 Pod를 관리하고 업데이트를 쉽게 수행할 수 있으며, 웹, API서버 등의 가용성을 보장해야할때 사용됩니다.
+
+-	**DaemonSet**: 각 노드마다 하나의 Pod를 강제로 배치할 때 사용되며, 로그 수집기, 모니터링 에이전트등을 모든 노드에 배포할때 사용됩니다.
+-	**StatefulSet**: 상태를 유지해야 하는 애플리케이션(예: 데이터베이스)을 배포할 때 사용되며, MYSQL, Kafka 등 상태가 중요한 애플리케이션을 배포할때 사용됩니다.
+-	**Job / CronJob**: 특정 작업을 1회 또는 일정한 간격으로 수행할 때. 사용되며, Job의 경우 데이터마이그레이션 일회성 작업을 수행할때 사용되며, Cronjob 의 경우 정기적인 작업을 수행할때 사용됩니다.
+
+
+
+## 4. EKS 구성
+
+### 4.1 콘솔에서 EKS 구성
+
+![Image](https://github.com/user-attachments/assets/75012b9f-712f-42bf-958a-b01f6691200f)
+![Image](https://github.com/user-attachments/assets/8c90fbc3-85d2-4337-af08-0610fc43dc4d)
+
