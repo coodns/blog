@@ -169,8 +169,6 @@ Kubernetes에는 다양한 배포 방식이 있습니다.
 ### 4.2 EKSCTL 활용하여, EKS 구성
 > eksctl 및 aws cli 설정이 되어있다는 전제하에 진행 하겠습니다.
 
-1. Cluster Config 파일 작성
-
 해당 파일에서 지정하지 않은 옵션은 Eksctl 기본 값으로 구성되게 됩니다. 기본 값의 경우 아래 링크를 참고하여 ClusterConfig 파일을 작성합니다.
 
 아래 구성의 경우 노드 그룹 하나를 구성하며, 해당 노드그룹은 t3.medium 패밀리로 인스턴스들을 생성합니다. 생성 개수는 최대 2개 최소 1개이며, 원하는값은 1개로 설정하여 구성시 EC2 인스턴스 하나가 실행중인 상태 로 구성합니다.
@@ -178,7 +176,7 @@ Kubernetes에는 다양한 배포 방식이 있습니다.
 📌 cluster.yaml
 ![Image](https://github.com/user-attachments/assets/0b3f2669-8afa-43d4-9753-ddea75a81bcb)
 
-2. 아래 명령어를 통해 실행
+📌 아래 명령어를 통해 실행
 ![carbon-2.png](../images/carbon-2.png)
 
 ### 4.3 Eksctl vs Console made
