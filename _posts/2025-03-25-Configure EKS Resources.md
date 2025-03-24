@@ -2,7 +2,8 @@
 layout: post
 category: aws
 ---
-## 1. How to configure EKS Controller
+
+## How to configure EKS Controller
 
 > EKS가 구성되어있다는 전제하에 진행하도록 하겠습니다.
 
