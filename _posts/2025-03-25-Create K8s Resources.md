@@ -5,9 +5,6 @@ category: k8s
 
 ## 1. configure nginx pod
 
-
-
-
 ## 1.Scailing
 
 2. 쿠버네티스 위 pod들은 어떻게 스케일링 되나요?

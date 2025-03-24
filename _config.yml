@@ -1,7 +1,7 @@
 title: co dns # name of the site
 author: Gerrad SEO # name of site's author
 email: mail@chaewoon.me # email of site's author
-url: https://blog.chaewoon.me # root address of the site
+url: https://archive.chaewoon.me # root address of the site
 baseurl: "/" # subpath of the site, e.g. "/blog" (leave it blank "" if you're site shouldn't use a subpath)
 description: > # description of the site (multiple lines allowed)
   Be Humble 
