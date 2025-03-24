@@ -1,6 +1,6 @@
 ---
 layout: post
-category: aws
+category: k8s
 ---
 
 ## How to configure EKS Controller
