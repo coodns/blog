@@ -1,6 +1,6 @@
 ---
 layout: post
-category: k8s
+category: aws
 ---
 
 ## 1. configure nginx pod
