@@ -168,6 +168,7 @@ Kubernetes에는 다양한 배포 방식이 있습니다.
 
 ### 4.2 EKSCTL 활용하여, EKS 구성
 > eksctl 및 aws cli 설정이 되어있다는 전제하에 진행 하겠습니다.
+
 1. Cluster Config 파일 작성
     </br></br>
     해당 파일에서 지정하지 않은 옵션은 Eksctl 기본 값으로 구성되게 됩니다. 기본 값의 경우 아래 링크를 참고하여 ClusterConfig 파일을 작성합니다.
