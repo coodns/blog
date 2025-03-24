@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "How to Configure EKS Controller"
+title: "How to configure EKS Controller"
 date: 2025-03-26 10:00:00 +0900
 categories: [k8s]
 ---
