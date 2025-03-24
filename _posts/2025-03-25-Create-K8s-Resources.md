@@ -3,7 +3,7 @@ layout: post
 category: k8s
 ---
 
-1. configure nginx pod
+## 1. configure nginx pod
 
 
 
