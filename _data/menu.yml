@@ -6,13 +6,13 @@ entries:
     entries:
       - title: welcome my blog 👋 
       - title: github
-        url: https://github.com/codnstj
+        url: https://github.com/coodns
       - title: email
         url: mailto:mail@chaewoon.me
 
   - title: all posts
     post_list:
-      limit: 5
+      limit: 10
       show_more: true
       show_more_text: See archive...
       show_more_url: archive.html
