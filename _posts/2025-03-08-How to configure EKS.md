@@ -177,7 +177,7 @@ Kubernetes에는 다양한 배포 방식이 있습니다.
 ![Image](https://github.com/user-attachments/assets/0b3f2669-8afa-43d4-9753-ddea75a81bcb)
 
 📌 아래 명령어를 통해 실행
-![carbon-2.png](../images/carbon-2.png)
+![carbon-2.png](../images/2332323.png)
 
 ### 4.3 Eksctl vs Console made
 
