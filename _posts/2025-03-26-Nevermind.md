@@ -1,7 +1,6 @@
 ---
 layout: post
 category: k8s
-title: "title"
 ---
 ## How to configure EKS Controller
 
