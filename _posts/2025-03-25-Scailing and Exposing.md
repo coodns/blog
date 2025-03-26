@@ -4,7 +4,7 @@ category: k8s
 title: Kubernetes에서 Pod 스케일링과 기본 구조 이해하기
 ---
 
-## Kubernetes에서 왜 스케일링이 필요할까?
+## ✅ Kubernetes에서 Pod 스케일링이 필요한 이유
 
 Kubernetes에서 애플리케이션을 안정적이고 효율적으로 운영하려면 **Pod 스케일링**이 필수적입니다.  
 트래픽이 증가하면 더 많은 리소스를 할당해 성능을 유지하고, 사용량이 줄면 자원을 줄여 낭비를 막아야 하죠.  
@@ -18,9 +18,26 @@ Kubernetes에서 애플리케이션을 안정적이고 효율적으로 운영하
 `DaemonSet`처럼 Pod 수를 늘리기 어려운 경우에는 수직 스케일링이 사용됩니다.  
 예를 들어 로그 수집기처럼 노드마다 1개만 존재해야 하는 경우가 이에 해당합니다.
 
+--- 
+
+## 🔄 스케일링의 종류
+
+### 1. 수평 스케일링 (Horizontal Scaling)
+- Pod 개수를 조절하여 확장
+- 주로 Deployment, StatefulSet에서 사용
+- HPA(Horizontal Pod Autoscaler)로 자동화 가능
+- 메트릭 기반 (CPU, 메모리, 커스텀)
+
+### 2. 수직 스케일링 (Vertical Scaling)
+- Pod 하나의 리소스(CPU/Memory) 조절
+- DaemonSet 등 Pod 수 조절이 어려운 경우 사용
+
+
 ---
 
-## HPA를 활용한 자동 스케일링과 유의사항
+## HPA를 활용한 자동 스케일링
+
+![123](https://blog.kakaocdn.net/dn/dheuWM/btsGdCk3vco/mqQP2jPuuIELCGxDiyDVSK/img.jpg)
 
 수평 스케일링은 보통 **HPA(Horizontal Pod Autoscaler)**를 통해 구현합니다.  
 HPA는 CPU, 메모리, 혹은 사용자 정의 지표(Custom Metrics)를 기반으로 설정된 조건에 따라 자동으로 Pod 수를 조정합니다.  
@@ -41,6 +58,17 @@ HPA는 메트릭이 누락되거나 준비되지 않은 Pod가 있으면 보수�
 
 ---
 
+## ⚠️ 스케일링 시 유의사항
+
+- DaemonSet은 수평 스케일 불가 → 수직 스케일로 대응
+- HPA는 Metrics Server 미설치 시 작동 불가
+- 다음 Pod는 스케일 판단 제외됨:
+  - 삭제 중(Pod deletionTimestamp 존재)
+  - 실패한 Pod
+  - Ready 상태가 아닌 Pod
+
+---
+
 ## 스케일링을 반드시 구성해야 할까?
 
 반드시 필수는 아니지만, **트래픽이 유동적이거나 예상치 못한 부하가 자주 발생하는 서비스라면 구성하는 것이 매우 권장됩니다.**  
@@ -53,7 +81,8 @@ HPA는 메트릭이 누락되거나 준비되지 않은 Pod가 있으면 보수�
 
 ---
 
-## Kubernetes 기본 구성 요소 이해하기
+## 🌐 Pod 네트워크 통신
+![img_2.png](../images/img_2.png)
 
 Kubernetes 환경에서의 Pod 통신은 기본적으로 같은 네임스페이스 내에서는 **Pod IP 또는 서비스 이름**을 통해 이뤄지며,  
 다른 네임스페이스의 Pod와 통신할 경우에는 `service-name.namespace.svc.cluster.local` 형식을 사용할 수 있습니다.
@@ -87,12 +116,20 @@ Kubernetes 환경에서의 Pod 통신은 기본적으로 같은 네임스페이�
 	- AWS Load Balancer와의 연동도 자연스럽고, EKS 서비스와의 통합성이 뛰어납니다.
 
 
+## 🌐 Ingress Controller란?
+
+
 외부에서 클러스터 내부 서비스에 접근하려면 **Ingress Controller**를 사용합니다.  
 Ingress는 HTTP/HTTPS 트래픽을 받아 내부 서비스로 라우팅하는 역할을 하며,  
 이를 실제로 처리하는 Ingress Controller로는 NGINX, AWS ALB Controller 등이 있습니다.
 이를 구성하는 방법은 뒤에서 알아보도록 하겠습니다.
 
+- 예: NGINX Ingress Controller, AWS ALB Controller 등
 
+
+---
+
+## 💊 Pod 헬스체크 구성
 
 다음으로 Kubernetes는 서비스의 안정성을 높이기 위해 **헬스체크(Probe)** 기능을 제공합니다.  
 `livenessProbe`, `readinessProbe`, `startupProbe`를 통해 컨테이너가 살아있는지, 요청을 받을 준비가 되었는지,  
@@ -108,6 +145,8 @@ startupProbe는 애플리케이션이 “시작 중”일 때는 기다려주고
 기존에는 livenessProbe만 있으면 부팅 중인 애플리케이션도
 “살아있지 않다”고 판단하고 재시작해버리는 문제가 있었습니다.
 
+→ **readiness 실패 시** 트래픽 차단, **liveness 실패 시** 재시작
+
 하지만 일부 앱은 초기화에 몇 분이 걸릴 수 있기에.
 이런 경우 startupProbe를 설정하면 시작 중에는 livenessProbe를 무시하고
 정해진 시간 안에만 살아나면 OK로 간주합니다.
@@ -118,16 +157,29 @@ startupProbe는 애플리케이션이 “시작 중”일 때는 기다려주고
 
 ---
 
-## Kubernetes Storage 기본 구조와 워크로드 유형별 차이
+## 💾 Kubernetes Storage 
 
-스토리지를 관리하기 위해 Kubernetes는 다음과 같은 리소스를 제공합니다:
+### 관련 리소스
 
-- **PersistentVolume(PV)**: 클러스터에서 제공되는 실제 저장소  
-- **PersistentVolumeClaim(PVC)**: Pod가 요청하는 저장소  
+- **PersistentVolume (PV)**: 클러스터에서 제공되는 실제 저장소
+- **PersistentVolumeClaim (PVC)**: Pod가 요청하는 저장소
 - **StorageClass**: 스토리지 성능, 접근 방식, 동적 프로비저닝 정책을 정의
+#### StorageClass란?
 
-특히 StorageClass는 **PVC 생성 시 어떤 타입의 저장소를 동적으로 생성할지 결정하는 역할**을 하며,  
-사용자는 원하는 속성과 요구 조건에 맞춰 PVC를 구성할 수 있습니다.
+- PVC 생성 시 어떤 스토리지 종류/성능을 사용할지 지정
+- 동적으로 PV를 생성하며, 다양한 접근 모드 및 리소스 옵션 제공
+
+
+---
+## 📦 Deployment vs StatefulSet
+
+| 항목             | Deployment (Stateless)        | StatefulSet (Stateful)                        |
+|------------------|-------------------------------|-----------------------------------------------|
+| 상태 저장 여부    | X                             | O                                             |
+| Pod 정체성        | 동일함                           | 각 Pod에 고유한 이름/스토리지 부여                         |
+| 주 사용 사례      | 웹 서버, API 서버 등 (상태 없는 애플리케이션) | DB, Kafka, Zookeeper 등 (순서, 고유성, 상태가 필요한 서비스) |
+
+
 
 워크로드 배포 방식에서도 중요한 차이가 있습니다.  
 `Deployment`는 **무상태(stateless)** 서비스에 적합하며, 모든 Pod가 동일하게 동작하고 상태를 공유하지 않습니다.  
@@ -178,3 +230,5 @@ EBS CSI Driver 또한 동일한 과정으로 Helm을 통해 설치한 후 해당
 또한 해당 Deployment가 사용하는 service Account의 경우 아래 명령어와 같이 Helm 차트를 사용하여 생성해주었습니다.
 
 ![lsls](../images/carbon-2.png)
+
+이후 pv, pvc, ingress, deployment, 
