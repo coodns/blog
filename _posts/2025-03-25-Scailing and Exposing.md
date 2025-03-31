@@ -208,20 +208,19 @@ IAM OIDC Provider는 기본적으로 활성화되어 있지 않기 때문에 (de
 
 ![st](../images/carbon-10.png)
 
-다음으로 사용자 대신 AWS API를 호출할 수 있는 AWS 로드 밸런서 컨트롤러의 IAM 정책을 다운로드한 후 해당 정책으로 iam 정책을 생성한뒤 해당 정책을 현재 사용중이던, IAM 역할에 부착합니다.
+다음으로 사용자 대신 AWS API를 호출할 수 있는 AWS 로드 밸런서 컨트롤러의 IAM 정책을 다운로드합니다.
 
-![sss](../images/carbon-9.png)
+![sss](../images/carbon-12.png)
 
-이후 생성한 역할을 통해 EKS Service Account 를 생성합니다. 
+이후 해당 정책으로 iam 정책을 생성한뒤 해당 정책을 현재 사용중이던, IAM 역할에 부착합니다. 역할을 통해 EKS Service Account 를 생성합니다. 
 해당 Service Account 는 다음으로 설치할 AWS Account Controller에 연결할 역할입니다. 
 
-![stst](../images/carbon-8.png)
+
+![ststsss](../images/carbon-7.png)
 
 eks-chart helm 리포지토리를 추가하여 helm 을 통해 aws-controller 를 설치 할 수 있도록 합니다.
 
 이후 해당 차트가 적용되도록 로컬 리포지토리 또한 업데이트 합니다.
-
-![ststsss](../images/carbon-7.png)
 
 다음으로 helm 을 통해 AWS Loadbalancer Controller를 설치합니다.
 
