@@ -72,7 +72,7 @@ RBAC(Role-Based Access Control)를 활용하여 권한을 설정합니다.
 ### 2.2 다른 사용자에게 클러스터 접근 권한 부여하기
 
 EKS 클러스터에 다른 사용자를 추가하려면 aws-auth ConfigMap을 수정해야 합니다.
-![dsds.png](../images/dsds.png)
+![dsds](../images/dsds.png)
 
 - mapRoles: IAM 역할을 Kubernetes 그룹과 연결합니다.
 - mapUsers: 특정 IAM 사용자를 Kubernetes 사용자로 매핑합니다.
@@ -136,7 +136,7 @@ nodeAffinity에는 다음 두 종류가 있습니다.
 아래 예시에서는 requiredDuringSchedulingIgnoredDuringExecution을 사용하여 **파드가 반드시 특정 조건을 만족하는 노드에서만 실행되도록 강제 합니다.**
 
 📌 example
-![ds.png](../images/ds.png)
+![ds](../images/ds.png)
 
 이외에도 NodeAffinty 의 반대로 노드가 파드 및 파드그룹을 제외시키는  **Taints & Tolerations**, 지역(region), 존(zone), 노드 및 기타 사용자 정의 토폴로지 도메인과 같이 장애 도메인으로 설정된 클러스터에 걸쳐 파드가 분배되는 방식을 제어할 수 있는 **PodTopologySpreadConstraints** 가 있습니다.
 
@@ -158,13 +158,12 @@ Kubernetes에는 다양한 배포 방식이 있습니다.
 
 ### 4.1 콘솔에서 EKS 구성
 1. 클러스터 구성
-![Image](https://github.com/user-attachments/assets/60f6e58a-8bc0-4647-9881-72d41543afc3)
-![Image](https://github.com/user-attachments/assets/fab70c3a-829e-4a8f-9111-e27afaff57b7)
-
+![Image](../images/a.png)
+![Image](../images/b.png)
 2. 노드그룹 구성
-![Image](https://github.com/user-attachments/assets/63ff641a-e874-4158-994b-331c1f53dc17)
-![Image](https://github.com/user-attachments/assets/6db641d9-535d-4c40-9c0e-54d589af420b)
-![Image](https://github.com/user-attachments/assets/9ba954c0-b0ad-4b42-8d53-6585c873fd73)
+![Image](../images/c.png)
+![Image](../images/d.png)
+![Image](../images/e.png)
 
 ### 4.2 EKSCTL 활용하여, EKS 구성
 > eksctl 및 aws cli 설정이 되어있다는 전제하에 진행 하겠습니다.
@@ -174,7 +173,7 @@ Kubernetes에는 다양한 배포 방식이 있습니다.
 아래 구성의 경우 노드 그룹 하나를 구성하며, 해당 노드그룹은 t3.medium 패밀리로 인스턴스들을 생성합니다. 생성 개수는 최대 2개 최소 1개이며, 원하는값은 1개로 설정하여 구성시 EC2 인스턴스 하나가 실행중인 상태 로 구성합니다.
 
 📌 cluster.yaml
-![Image](https://github.com/user-attachments/assets/0b3f2669-8afa-43d4-9753-ddea75a81bcb)
+![Image](../images/carbon-4.png)
 
 📌 아래 명령어를 통해 실행
 ![carbon-2.png](../images/2332323.png)
