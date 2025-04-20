@@ -23,26 +23,6 @@ CoreDNS는 Kubernetes 클러스터에서 기본적으로 사용되는 DNS 서버
 
 ## 2. CoreDNS 애드온 설치 및 구성
 
-Kubernetes에서는 CoreDNS가 기본 설치되어 있지만, 직접 설치하려면 다음을 수행합니다.
-
-```bash
-git clone https://github.com/coredns/deployment.git
-cd deployment/kubernetes
-kubectl apply -f coredns.yaml
-```
-
-구성이 잘 되었는지 확인하려면:
-
-```bash
-kubectl get pods -n kube-system -l k8s-app=kube-dns
-```
-
-또는 Helm Chart를 사용할 수도 있습니다.
-
-```bash
-helm repo add coredns https://coredns.github.io/helm
-helm install my-coredns coredns/coredns
-```
 
 ## 3. 네임스페이스 생성
 
@@ -55,7 +35,7 @@ kubectl create namespace sa-team
 
 ts-team.yaml
 
-```bash
+```yaml
 apiVersion: v1
 kind: Pod
 metadata:
@@ -74,7 +54,7 @@ spec:
 
 sa-team.yaml
 
-```
+```yaml
 apiVersion: v1
 kind: Pod
 metadata:
@@ -92,7 +72,7 @@ spec:
 
 위 파일들을 각각 배포합니다.
 
-```
+```bash
 # 네임스페이스 생성
 kubectl create namespace ts-team
 kubectl create namespace sa-team
