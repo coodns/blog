@@ -80,14 +80,14 @@ kubectl apply -f curl-ts.yaml
 kubectl apply -f curl-sa.yaml
 ```
 
-### 5. 각 파드에서 반대편 파드에 ping
+### 각 파드에서 반대편 파드에 ping
 
 ```bash
 kubectl exec -n ts-team curl-ts -- ping <curl-sa의 IP>
 kubectl exec -n sa-team curl-sa -- ping <curl-ts의 IP>
 ```
 
-### 6. IP 확인 방법
+### IP 확인 방법
 
 Pod의 IP는 다음 명령어로 확인할 수 있습니다:
 
@@ -98,7 +98,7 @@ kubectl get pod -o wide -n sa-team
 
 각 명령어는 해당 네임스페이스 안의 Pod들의 내부 클러스터 IP를 보여줍니다.
 
-### 7. curl을 통한 IP 없이 통신 시도
+### curl을 통한 IP 없이 통신 시도
 
 ```bash
 kubectl exec -n ts-team curl-ts -- curl curl-sa.sa-team.svc.cluster.local
@@ -228,4 +228,4 @@ kubectl logs deploy/DEPLOY_NAME
 |**7**|**Custom Sidecar**|사이드카 전용|bash, busybox 등을 활용한 간단한 tail-forward 방식|✅ 매우 가볍고 유연  <br>✅ 특정 Pod용으로 간편|❗ 기능 제한 많음  <br>❗ 운영 복잡성 ↑|
 
 
-## 로그 인덱스 형식 수정 방법
+### 로그 인덱스 형식 수정 방법
