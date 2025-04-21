@@ -2,7 +2,7 @@
 layout: post
 category: k8s
 ---
-### CoreDNS란?
+## CoreDNS란?
 
 CoreDNS는 쿠버네티스 클러스터의 DNS 역할을 수행할 수 있는, 유연하고 확장 가능한 DNS 서버이며, 클러스터 내에서 주로 내부 도메인 쿼리, 외부 도메인 쿼리에 사용됩니다. 다른 애플리케이션과 마찬가지로 Pod로 호스팅 되며, Deployment 로 실행되어 Service로 요청을 받습니다.&#x20;
 
@@ -140,7 +140,7 @@ CoreDNS는 Kubernetes 내부의 DNS 요청을 처리하여, 위에서 언급한 
 
 ---
 
-### Pod의 로그
+## Pod의 로그
 
 - Kubernetes 레벨
 	Container 로그는 `kubectl logs` 명령을 통해 확인할 수 있습니다.
@@ -227,5 +227,41 @@ kubectl logs deploy/DEPLOY_NAME
 |**6**|**Logagent**|DaemonSet / 사이드카 가능|Sematext 연동용. JSON 파싱 강점. Fluent보다 간단한 설정.|✅ 간단한 구성  <br>✅ 일부 SaaS 친화|❗ 상대적으로 사용자가 적음|
 |**7**|**Custom Sidecar**|사이드카 전용|bash, busybox 등을 활용한 간단한 tail-forward 방식|✅ 매우 가볍고 유연  <br>✅ 특정 Pod용으로 간편|❗ 기능 제한 많음  <br>❗ 운영 복잡성 ↑|
 
-
 ### 로그 인덱스 형식 수정 방법
+
+Kubernetes에서 수집된 로그를 Elasticsearch 와 같은 인덱스 기반 저장소에 저장할 때, 인덱스 형식은 검색 성능과 데이터 관리에 큰 영향을 미칩니다. Fluent Bit, Fluentd, Filebeat 등의 로그 수집기에서는 인덱스 이름을 커스터마이징할 수 있습니다.
+
+#### Fluent Bit 기준 예시
+
+Fluent Bit에서 Elasticsearch에 보낼 때 사용할 인덱스는 다음과 같이 설정할 수 있습니다:
+```
+[OUTPUT]
+    Name  es
+    Match *
+    Host  elasticsearch.logging.svc
+    Port  9200
+    Index logs-$TAG
+    Type  _doc
+```
+또는 날짜 기준 인덱스 구성이 가능합니다:
+```
+    Index kube-logs-%Y.%m.%d
+```
+#### Fluentd 기준 예시
+```
+<match kube.**>
+  @type elasticsearch
+  host elasticsearch.logging.svc
+  port 9200
+  index_name kube-logs-${record["kubernetes"]["namespace_name"]}-%Y%m%d
+  type_name _doc
+  logstash_format true
+</match>
+```
+- **${record["kubernetes"]["namespace_name"]}**: 네임스페이스 기준으로 인덱스 생성
+
+- **%Y%m%d**: 날짜별 인덱스 관리
+
+인덱스를 너무 세분화하면 Elasticsearch에서 shard 수가 많아져 성능 저하가 발생할 수 있습니다.
+반대로 너무 뭉뚱그리면 검색 성능 저하 및 유지보수 어려움, 조직/팀/서비스 단위로 인덱스를 구분하되, shard 수는 모니터링하면서 적절히 튜닝해야 합니다.
+
