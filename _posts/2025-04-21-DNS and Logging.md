@@ -4,10 +4,7 @@ category: k8s
 ---
 ## CoreDNS란?
 
-CoreDNS는 쿠버네티스 클러스터의 DNS 역할을 수행할 수 있는, 유연하고 확장 가능한 DNS 서버이며, 클러스터 내에서 주로 내부 도메인 쿼리, 외부 도메인 쿼리에 사용됩니다. 다른 애플리케이션과 마찬가지로 Pod로 호스팅 되며, Deployment 로 실행되어 Service로 요청을 받습니다.&#x20;
-
-CoreDNS는 Kubernetes 클러스터에서 기본적으로 사용되는 DNS 서버입니다. 클러스터 내부에서 서비스 이름을 기반으로 통신할 수 있게 해주는 핵심 컴포넌트로, kube-dns를 대체하여 현재 대부분의 클러스터에서 기본 DNS 애드온으로 사용됩니다
-
+CoreDNS는 쿠버네티스 클러스터의 DNS 역할을 수행할 수 있는, 유연하고 확장 가능한 DNS 서버이며, 클러스터 내에서 주로 내부 도메인 쿼리, 외부 도메인 쿼리에 사용됩니다. 다른 애플리케이션과 마찬가지로 Pod로 호스팅 되며, Deployment 로 실행되어 Service로 요청을 받습니다.
 
 
 **주요 기능:**
@@ -154,10 +151,6 @@ kubectl logs POD_NAME CONTAINER_NAME
 	
 ## labels
 kubectl logs -l run=nginx
-	
-## Deploy
-kubectl logs deploy/DEPLOY_NAME
-	
 ```
 ```text
 사용자 ──> kubectl logs my-pod
@@ -169,7 +162,7 @@ kubectl logs deploy/DEPLOY_NAME
    대상 Pod가 있는 노드의 [Kubelet]에 요청
             │
             ▼
-   [Kubelet]이 로그 파일 확인 (/var/log/pods or container runtime)
+   [Kubelet]이 로그 파일 확인 (ex: /var/log/pods)
             │
             ▼
    로그 내용을 API Server에 전달
