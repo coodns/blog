@@ -265,28 +265,36 @@ scrape_configs:
 더 복잡한 환경에서는 다음과 같은 고급 설정을 추가할 수 있습니다:
 
 1. **서비스 디스커버리**: 동적 환경에서 대상을 자동으로 발견
+
+
    ```yaml
-   - job_name: 'kubernetes-pods'
+     - job_name: 'kubernetes-pods'
      kubernetes_sd_configs:
        - role: pod
    ```
 
 2. **릴레이블링**: 대상 메타데이터 조작
+
+
    ```yaml
-   relabel_configs:
+     relabel_configs:
      - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
        action: keep
        regex: true
    ```
 
 3. **알림 규칙**: 조건에 따른 알림 정의
+
+
    ```yaml
-   rule_files:
+     rule_files:
      - 'alert.rules'
    ```
 
 4. **원격 쓰기/읽기**: 장기 스토리지 통합
+
+
    ```yaml
-   remote_write:
+     remote_write:
      - url: "http://remote-storage/write"
    ```
