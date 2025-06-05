@@ -63,7 +63,6 @@ prometheus_http_requests_total
 
 이 쿼리는 Prometheus 서버가 처리한 HTTP 요청의 총 수를 보여줍니다.
 
-<Prometheus UI에서 prometheus_http_requests_total 쿼리 결과 화면>
 
 또한 시스템 메트릭을 수집하기 위해 Node Exporter를 설치할 수 있습니다:
 
