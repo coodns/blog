@@ -114,7 +114,6 @@ helm install myapp oci://registry.example.com/charts/mychart --version 0.1.0
 |------|------|------|
 | **ArgoCD** | CNCF 졸업 프로젝트 | ✅ 강력한 UI<br>✅ 멀티 클러스터 지원<br>✅ 풍부한 기능 |
 | **Flux** | CNCF 인큐베이팅 프로젝트 | ✅ 경량<br>✅ GitOps Toolkit 기반<br>✅ 모듈식 구조 |
-| **Jenkins X** | 클라우드 네이티브 CI/CD | ✅ 자동화된 파이프라인<br>✅ 프리뷰 환경 |
 | **Tekton** | Kubernetes 네이티브 CI/CD | ✅ CRD 기반<br>✅ 파이프라인 재사용성 |
 
 ### 6.2 EKS 통합 고려사항
@@ -252,8 +251,6 @@ kubectl apply -f application.yaml
 ```
 
 ### ArgoCD 동작 원리
-<이미지 넣을 필요 있음>
-![argocd-flow](../images/argocd-flow.png)
 
 **ArgoCD 동작 과정:**
 
@@ -311,14 +308,6 @@ ArgoCD UI에 접속하면 다음과 같은 정보를 확인할 수 있습니다:
   - Pipeline: Task들의 조합
   - PipelineRun: Pipeline 실행 인스턴스
 
-### 8.3 Jenkins X
-
-**Jenkins X v3**
-- **특징**: GitOps 기반 자동화된 CI/CD
-- **주요 기능**:
-  - 자동 프리뷰 환경 생성
-  - 프로모션 파이프라인
-  - Tekton 기반 파이프라인
 
 ### 8.4 비교 요약
 
@@ -329,6 +318,5 @@ ArgoCD UI에 접속하면 다음과 같은 정보를 확인할 수 있습니다:
 | **ArgoCD** | 졸업 | 강력한 UI, 멀티클러스터 | 복잡한 환경, UI 중심 운영 |
 | **Flux** | 인큐베이팅 | 경량, 모듈식 | 단순한 환경, 자동화 중심 |
 | **Tekton** | 졸업 | Kubernetes 네이티브 | CI/CD 파이프라인 구축 |
-| **Jenkins X** | - | 자동화된 DevOps | 전체 DevOps 플랫폼 필요 시 |
 
 각 도구는 고유한 장단점이 있으므로, **팀의 요구사항과 기존 인프라를 고려하여 선택**하는 것이 중요합니다.
